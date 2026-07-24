@@ -38,11 +38,13 @@
 <section class="hero" id="home">
   <div class="wrap">
     <div class="hero-copy">
-      <div class="badge-shield"> हर तहसील में <b>केवल 1</b> अधिकृत डीलर</div>
-      <h1>केवल 1 अधिकृत डीलरशिप<span class="line2">का सुनहरा अवसर!</span></h1>
+      <div class="badge-shield"> हर क्षेत्र में <b>केवल 1</b> अधिकृत डीलर एवं डिस्ट्रीब्यूटर</div>
+      <h1> EV बिज़नेस में जुड़ने का <span class="line2">का सुनहरा अवसर!</span></h1>
+     
+  
       <div class="green-banner">ANCHAN EV के साथ जुड़ें और सफल व्यवसाय की नई शुरुआत करें।</div>
       <div class="hero-actions">
-        <a href="#apply" class="btn btn-red">डीलरशिप के लिए आवेदन करें</a>
+        <a href="#apply" class="btn btn-red"> डीलर / डिस्ट्रीब्यूटर के लिए आवेदन करें</a>
         <a href="tel:6396028802" class="btn btn-outline">📞 कॉल करें</a>
       </div>
       <div class="trust-strip">
@@ -104,7 +106,7 @@
   <div class="limited">
     <div>
       <h3>⏳ सीमित अवसर</h3>
-      <p>पहले आवेदन करने वालों को प्राथमिकता दी जाएगी — हर तहसील में सिर्फ 1 डीलरशिप उपलब्ध।</p>
+      <p>पहले आवेदन करने वालों को प्राथमिकता दी जाएगी — हर तहसील में 1 अधिकृत डीलर और हर जिले में 1 अधिकृत डिस्ट्रीब्यूटरशिप उपलब्ध।</p>
     </div>
     <a href="#apply" class="btn" style="background:#fff; color:var(--red-dark);">आज ही आवेदन करें</a>
   </div>
@@ -115,7 +117,7 @@
   <div class="wrap">
     <div class="apply-info">
       <span class="eyebrow" style="display:inline-block; font-weight:700; font-size:13px; color:var(--blue); background:#E7EEFF; padding:6px 16px; border-radius:999px;">डीलरशिप आवेदन</span>
-      <h2 style="margin-top:16px;">आज ही डीलरशिप के लिए आवेदन करें!</h2>
+      <h2 style="margin-top:16px;">आज ही डीलर या डिस्ट्रीब्यूटर बनने के लिए आवेदन करें!</h2>
       <p>अपनी जानकारी भरें — हमारी टीम 2-3 कार्य दिवसों में आपसे संपर्क करेगी।</p>
       <div class="apply-steps">
         <div class="apply-step"><div class="num">1</div><span>अपनी जानकारी भरें</span></div>
@@ -146,21 +148,33 @@
         </div>
       </div>
       <div class="form-row">
-        <div class="field">
-          <label for="fstate">राज्य</label>
-          <input type="text" id="fstate" name="state" required placeholder="जैसे: उत्तर प्रदेश">
-        </div>
-        <div class="field">
-          <label for="finvest">निवेश क्षमता</label>
-          <select id="finvest" name="investment" required>
-            <option value="">चुनें</option>
-            <option>₹5L – ₹8L</option>
-            <option>₹8L – ₹12L</option>
-            <option>₹12L – ₹18L</option>
-            <option>₹18L+</option>
-          </select>
-        </div>
-      </div>
+  <div class="field">
+    <label for="fstate">राज्य</label>
+    <input type="text" id="fstate" name="state" required placeholder="जैसे: उत्तर प्रदेश">
+  </div>
+
+  <div class="field">
+    <label for="fbusiness"> आवेदन का प्रकार</label>
+    <select id="fbusiness" name="businessType" required>
+      <option value="">चुनें</option>
+      <option value="Dealer">डीलर (Dealer)</option>
+      <option value="Distributor">डिस्ट्रीब्यूटर (Distributor)</option>
+    </select>
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="field full">
+    <label for="finvest">निवेश क्षमता</label>
+    <select id="finvest" name="investment" required>
+      <option value="">चुनें</option>
+      <option>₹5L – ₹8L</option>
+      <option>₹8L – ₹12L</option>
+      <option>₹12L – ₹18L</option>
+      <option>₹18L+</option>
+    </select>
+  </div>
+</div>
       <div class="field full">
         <label for="fmsg">संदेश (वैकल्पिक)</label>
         <textarea id="fmsg" name="message" placeholder="अपने व्यवसाय अनुभव के बारे में बताएं..."></textarea>
