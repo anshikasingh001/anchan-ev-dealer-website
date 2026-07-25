@@ -14,58 +14,35 @@
 <!-- ============ NAVBAR ============ -->
 <header class="nav">
   <div class="wrap">
-    <a href="#home" class="logo">
-      <img src="AP BROTHER (2).png"alt="Anchan EV Scooter Logo" class="logo-mark"logo-text">
 
-       
+    <a href="#home" class="logo">
+      <img src="AP BROTHER (2).png" alt="Anchan EV Scooter Logo" class="logo-mark">
     </a>
-    <nav class="nav-links" id="navLinks">
-      <a href="#home">होम</a>
-      
-      <a href="#apply">आवेदन करें</a>
-      <a href="#contact">संपर्क करें</a>
-    </nav>
-    <div class="nav-cta">
-      
-      <a href="#apply" class="btn btn-red">आवेदन करें</a>
-      <button class="burger" id="burgerBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-    </div>
+
   </div>
 </header>
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="home">
-
-  <div class="wrap">
-
-    <div class="hero-copy">
-
-      <h1>
-        Anchan EV बिज़नेस में जुड़ने का
-        <span class="line2">सुनहरा अवसर!</span>
-      </h1>
-
+    <div class="wrap">
+        <div class="hero-copy">
+            <h1>
+                <span class="brand">Anchan EV</span><br>
+                आपके क्षेत्र में EV शोरूम, बैटरी स्वैप स्टेशन एवं EV स्टेशन<br>
+                व्यवसाय शुरू करने का सुनहरा अवसर
+            </h1>
+        </div>
     </div>
-
-
-    <div class="hero-visual">
-      <div class="hero-img-card">
-        <img src="scooty.png" alt="Anchan EV">
-      </div>
-    </div>
-
-  </div>
-
 </section>
 
 
-
+<section>
   <div class="limited">
     <div>
       <h3>पहले आएं, पहले पाएं</h3>
-      <p>पहले आवेदन करने वालों को प्राथमिकता दी जाएगी — हर जिले में 1 अधिकृत डिस्ट्रीब्यूटरशिप और हर तहसील में 1 अधिकृत डीलर।</p>
+      <p>डिस्ट्रीब्यूटरशिप एवं डीलरशिप का आवंटन "पहले आओ, पहले पाओ" के आधार पर किया जाएगा।</p>
     </div>
-    <a href="#apply" class="btn" style="background:#fff; color:var(--red-dark);">आज ही आवेदन करें</a>
+    
   </div>
 </section>
 
@@ -73,7 +50,7 @@
 <section class="apply" id="apply">
   <div class="wrap">
 
-    <h2 class="form-title">आवेदन </h2>
+    <h2 class="form-title">आज ही आवेदन करें और अपने जिले या तहसील का अधिकार सुरक्षित करें।</h2>
 
     <form class="dealer-form" id="dealerForm">
 
@@ -83,8 +60,17 @@
           <label for="fbusiness">आवेदन का प्रकार</label>
           <select id="fbusiness" name="businessType" required>
             <option value="">चुनें</option>
-            <option value="Dealer">डीलर (Dealer)</option>
-            <option value="Distributor">डिस्ट्रीब्यूटर (Distributor)</option>
+            <option value="Distributor"> डिस्ट्रिक्ट डिस्ट्रीब्यूटर</option>
+            <option value="Dealer">तहसील डीलर</option>
+          </select>
+        </div>
+         <div class="field">
+          <label for="fbusinessarea">व्यवसाय क्षेत्र</label>
+          <select id="fbusinessarea" name="businessarea" required>
+            <option value="">चुनें</option>
+            <option value="evs"> ईवी शोरूम</option>
+            <option value="evc">ईवी चार्जिंग स्टेशन</option>
+            <option value="evswap">ईवी बैटरी स्वैप स्टेशन</option>
           </select>
         </div>
 
@@ -120,6 +106,11 @@
       <div class="form-row">
 
         <div class="field">
+          <label for="fcity">शहर</label>
+          <input type="text" id="fcity" name="city" required placeholder="शहर">
+        </div>
+
+        <div class="field">
           <label for="ftehsil">तहसील</label>
           <input type="text" id="ftehsil" name="tehsil" required placeholder="तहसील">
         </div>
@@ -141,7 +132,7 @@
 
         <div class="field">
           <label for="fpincode">पिनकोड</label>
-          <input type="number" id="fpincode" name="pincode" required placeholder="283203">
+          <input type="text" id="fpincode" name="pincode" maxlength="6" required placeholder="283203">
         </div>
 
       </div>
@@ -162,15 +153,12 @@
 
       </div>
 
-
-      <div class="submit-row">
-        <button type="submit" class="btn btn-red" id="submitBtn">
-          आवेदन जमा करें
-        </button>
-
-        <span class="form-status" id="formStatus"></span>
-      </div>
-
+<div class="submit-row">
+  <button type="submit" class="btn btn-red" id="submitBtn">
+    आवेदन जमा करें
+  </button>
+  <span class="form-status" id="formStatus"></span>
+</div>
 
     </form>
 
@@ -184,7 +172,7 @@
   <div class="wrap">
     <div class="contact-item">
       <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.4 2.1L8 9.9a16 16 0 006 6l1.4-1.3a2 2 0 012.1-.4c.9.3 1.8.5 2.7.6a2 2 0 011.8 2z" stroke="#fff" stroke-width="1.8"/></svg></div>
-      <div><b>1800-120-1929 </b><span>Toll free</span></div>
+      <div><b>1800-120-1929 </b><span>Toll-free</span></div>
     </div>
     <div class="contact-item">
       <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.8"/><path d="M3 12h18M12 3a14 14 0 010 18 14 14 0 010-18z" stroke="#fff" stroke-width="1.8"/></svg></div>
