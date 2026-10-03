@@ -8,6 +8,8 @@
    5. Stat counters
    6. Scroll-to-top button
    7. Enquiry form validation + submit handler
+   8. Footer year + alternate burger
+   9. Dealer application form (Google Sheet + emails)
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,11 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initScrollTopButton();
   initEnquiryForm();
+  initFooterYearAndBurger();
+  initDealerForm();
 });
 
 /* ---------------------------------------------------------
-   1. Navbar scroll state — adds a compact class after
-      scrolling past a small threshold.
+   1. Navbar scroll state
    --------------------------------------------------------- */
 function initNavbarScroll() {
   const navbar = document.getElementById('navbar');
@@ -39,8 +42,7 @@ function initNavbarScroll() {
 }
 
 /* ---------------------------------------------------------
-   2. Mobile menu — hamburger toggle + auto-close on link
-      click / outside click / escape.
+   2. Mobile menu
    --------------------------------------------------------- */
 function initMobileMenu() {
   const hamburger = document.getElementById('hamburger');
@@ -76,18 +78,16 @@ function initMobileMenu() {
 }
 
 /* ---------------------------------------------------------
-   3. Active nav link — compares each link's page name
-      against the current file name and marks it active.
-      Works across index.html, dealership.html, etc.
+   3. Active nav link
    --------------------------------------------------------- */
 function initActiveNavLink() {
-  const navLinks = document.querySelectorAll('#navLinks a[data-page]');
-  if (!navLinks.length) return;
+  const links = document.querySelectorAll('#navLinks a[data-page]');
+  if (!links.length) return;
 
   let currentPage = window.location.pathname.split('/').pop();
-  if (currentPage === '' ) currentPage = 'index.html';
+  if (currentPage === '') currentPage = 'index.html';
 
-  navLinks.forEach((link) => {
+  links.forEach((link) => {
     if (link.dataset.page === currentPage) {
       link.classList.add('active');
     }
@@ -95,8 +95,7 @@ function initActiveNavLink() {
 }
 
 /* ---------------------------------------------------------
-   4. Scroll reveal — fades/slides sections and cards into
-      view using IntersectionObserver.
+   4. Scroll reveal
    --------------------------------------------------------- */
 function initScrollReveal() {
   const targets = document.querySelectorAll(
@@ -126,9 +125,7 @@ function initScrollReveal() {
 }
 
 /* ---------------------------------------------------------
-   5. Stat counters — animates numbers up when the stats
-      section enters the viewport. Values come from the
-      data-target attribute in the HTML (editable there).
+   5. Stat counters
    --------------------------------------------------------- */
 function initCounters() {
   const counters = document.querySelectorAll('.stat-number');
@@ -142,7 +139,7 @@ function initCounters() {
 
     const tick = (now) => {
       const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       const value = Math.round(eased * target);
       el.textContent = value + suffix;
       if (progress < 1) requestAnimationFrame(tick);
@@ -192,10 +189,7 @@ function initScrollTopButton() {
 }
 
 /* ---------------------------------------------------------
-   7. Enquiry form — front-end validation and a submit
-      handler that is structured so a real backend / API
-      can be dropped in later (see submitEnquiry below).
-      Only present on contact.html.
+   7. Enquiry form (contact.html)
    --------------------------------------------------------- */
 function initEnquiryForm() {
   const form = document.getElementById('enquiryForm');
@@ -212,7 +206,6 @@ function initEnquiryForm() {
     message: { el: document.getElementById('message'), validate: validateMessage },
   };
 
-  // Validate a single field and reflect state in the UI.
   const validateField = (key) => {
     const { el, validate } = fields[key];
     const errorEl = document.getElementById(`err-${key}`);
@@ -224,7 +217,6 @@ function initEnquiryForm() {
     return !message;
   };
 
-  // Validate on blur for immediate feedback.
   Object.keys(fields).forEach((key) => {
     fields[key].el.addEventListener('blur', () => validateField(key));
   });
@@ -269,7 +261,6 @@ function initEnquiryForm() {
         successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     } catch (err) {
-      // Real error handling can be wired up here once a backend exists.
       console.error('Enquiry submission failed:', err);
       alert('Something went wrong sending your enquiry. Please try again.');
     } finally {
@@ -281,18 +272,7 @@ function initEnquiryForm() {
 
 /**
  * submitEnquiry(payload)
- * -----------------------
- * This is the single place to connect a real backend or API.
- * Currently it only logs the payload and resolves — no fake
- * network request is made. Replace the body with, e.g.:
- *
- *   const response = await fetch('/api/enquiries', {
- *     method: 'POST',
- *     headers: { 'Content-Type': 'application/json' },
- *     body: JSON.stringify(payload),
- *   });
- *   if (!response.ok) throw new Error('Request failed');
- *   return response.json();
+ * Single place to connect a real backend / API for the contact form.
  */
 function submitEnquiry(payload) {
   console.log('Enquiry ready to submit:', payload);
@@ -331,94 +311,105 @@ function validateMessage(value) {
   return '';
 }
 
+/* ---------------------------------------------------------
+   8. Footer year + alternate burger (#burgerBtn)
+   --------------------------------------------------------- */
+function initFooterYearAndBurger() {
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// form
-document.getElementById('year').textContent = new Date().getFullYear();
-
-const burger = document.getElementById('burgerBtn');
-const navLinks = document.getElementById('navLinks');
-
-if(burger){
-  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  // Only used if the page has #burgerBtn and NOT #hamburger
+  const burgerBtnEl = document.getElementById('burgerBtn');
+  const burgerMenuEl = document.getElementById('navLinks');
+  if (burgerBtnEl && burgerMenuEl && !document.getElementById('hamburger')) {
+    burgerBtnEl.addEventListener('click', () => burgerMenuEl.classList.toggle('open'));
+    burgerMenuEl.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => burgerMenuEl.classList.remove('open'))
+    );
+  }
 }
 
-if(navLinks){
-  navLinks.querySelectorAll('a').forEach(a => 
-    a.addEventListener('click', () => navLinks.classList.remove('open'))
-  );
-}
+/* ---------------------------------------------------------
+   9. Dealer application form -> Google Apps Script
+   --------------------------------------------------------- */
+function initDealerForm() {
+  const dealerForm = document.getElementById('dealerForm');
+  if (!dealerForm) return;
 
+  const formStatus = document.getElementById('formStatus');
+  const submitBtn =
+    document.getElementById('submitBtn') || dealerForm.querySelector('button[type="submit"]');
 
-/* ================= DEALER APPLICATION FORM ================= */
+  const GOOGLE_SCRIPT_URL =
+    'https://script.google.com/macros/s/AKfycby5E4Uv8w0M4QC1Ka5g3zs0tVPHAGsKztzLB8cpXS5pnNux5XfqKJQXv8QTQnpn2FQK/exec';
 
-/* ================= DEALER APPLICATION FORM ================= */
+  const val = (id) => {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  };
 
-const GOOGLE_SHEET_URL =
-  "https://script.google.com/macros/s/AKfycbx8twpPhG_CcZZCpU6bY-0Z_anCNySqn23GZ99Bfg73F75iS2sIo3iVD8jFCRFIgw0/exec";
+  const showStatus = (msg, color) => {
+    if (formStatus) {
+      formStatus.textContent = msg;
+      formStatus.style.color = color;
+    } else if (msg) {
+      alert(msg);
+    }
+  };
 
-const form = document.getElementById("dealerForm");
-const statusEl = document.getElementById("formStatus");
-const submitBtn = document.getElementById("submitBtn");
-
-if (form && statusEl && submitBtn) {
-
-  form.addEventListener("submit", async function (e) {
-
+  dealerForm.addEventListener('submit', async function (e) {
     e.preventDefault();
+    console.log('Dealer form submit hua');
 
-    // Clear old message
-    statusEl.textContent = "";
-    statusEl.className = "form-status";
-
-    // Disable button
-    submitBtn.disabled = true;
-    submitBtn.textContent = "जमा हो रहा है...";
-
-    const formData = new FormData(form);
-
-    try {
-
-      await fetch(GOOGLE_SHEET_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: new URLSearchParams(formData)
-      });
-
-      // Reset form
-      form.reset();
-
-      // SHOW SUCCESS MESSAGE
-      statusEl.textContent =
-        "आवेदन प्राप्त हुआ — हमारी टीम जल्द संपर्क करेगी।";
-
-      statusEl.className = "form-status success";
-
-      // Make sure message is visible
-      statusEl.style.display = "inline-block";
-      statusEl.style.visibility = "visible";
-      statusEl.style.opacity = "1";
-
-      // Hide button
-      submitBtn.style.display = "none";
-
-    } catch (error) {
-
-      console.error("Form submission error:", error);
-
-      statusEl.textContent =
-        "कुछ गलत हो गया। कृपया पुनः प्रयास करें।";
-
-      statusEl.className = "form-status error";
-
-      statusEl.style.display = "inline-block";
-      statusEl.style.visibility = "visible";
-      statusEl.style.opacity = "1";
-
-      submitBtn.disabled = false;
-      submitBtn.textContent = "आवेदन जमा करें";
-      submitBtn.style.display = "inline-block";
+    const email = val('femail');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showStatus('✕ कृपया सही ईमेल पता दर्ज करें।', 'red');
+      return;
     }
 
-  });
+    const oldLabel = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'जमा हो रहा है...';
+    }
+    showStatus('', '');
 
+    const formData = {
+      businessType: val('fbusiness'),
+      businessarea: val('fbusinessarea'),
+      fullName: val('fname'),
+      phone: val('fphone'),
+      email: email,
+      address: val('faddress'),
+      city: val('fcity'),
+      tehsil: val('ftehsil'),
+      district: val('fdistrict'),
+      state: val('fstate'),
+      pincode: val('fpincode'),
+    };
+    console.log('Sending:', formData);
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(formData),
+      });
+
+      showStatus(
+        '✓ आपका आवेदन सफलतापूर्वक जमा हो गया है। हमारी टीम जल्द ही आपसे संपर्क करेगी।',
+        'green'
+      );
+      dealerForm.reset();
+    } catch (error) {
+      console.error('Form submission error:', error);
+      showStatus('✕ आवेदन जमा करने में समस्या हुई। कृपया कुछ देर बाद पुनः प्रयास करें।', 'red');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = oldLabel || 'आवेदन जमा करें';
+      }
+    }
+  });
 }
